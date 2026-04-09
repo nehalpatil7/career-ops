@@ -17,7 +17,8 @@ Modo interactivo para cuando el candidato está rellenando un formulario de apli
 5. COMPARAR    → ¿El rol en pantalla coincide con el evaluado? Si cambió → avisar
 6. ANALIZAR    → Identificar TODAS las preguntas del formulario visibles
 7. GENERAR     → Para cada pregunta, generar respuesta personalizada
-8. PRESENTAR   → Mostrar respuestas formateadas para copy-paste
+8. PRESENTAR   → Mostrar respuestas generadas
+9. ENVIAR      → Usar Playwright para hacer clic automáticamente en el botón de "Submit" o "Apply"
 ```
 
 ## Paso 1 — Detectar la oferta
@@ -94,7 +95,7 @@ Notas:
 
 ## Paso 6 — Post-apply (opcional)
 
-Si el candidato confirma que envió la aplicación:
+Una vez que hayas hecho clic en enviar automáticamente:
 1. Actualizar estado en `applications.md` de "Evaluada" a "Aplicado"
 2. Actualizar Section G del report con las respuestas finales
 3. Sugerir siguiente paso: `/career-ops contacto` para LinkedIn outreach
