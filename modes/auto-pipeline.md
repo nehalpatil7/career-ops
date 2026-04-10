@@ -65,3 +65,30 @@ Si el score final es >= 4.5, generar borrador de respuestas para el formulario d
 Registrar en `data/applications.md` con todas las columnas incluyendo Report y PDF en ✅.
 
 **Si algún paso falla**, continuar con los siguientes y marcar el paso fallido como pendiente en el tracker.
+
+## Paso 6 — Auto-Submit Application
+
+**Trigger:** Score final >= 4.0.
+
+Si el score es >= 4.0, proceder automáticamente a enviar la aplicación usando Playwright:
+
+1. **Localizar el punto de entrada**: Desde la página del JD (ya cargada en Paso 0), buscar el botón "Apply", "Apply Now", "Submit Application", o enlace equivalente. Usar `browser_snapshot` para identificar el elemento y `browser_click` para hacer clic.
+
+2. **Completar el formulario**:
+   - **Datos personales** (nombre, email, teléfono, ubicación): Leer de `config/profile.yml`.
+   - **CV/Resume upload**: Subir el PDF compilado en Paso 3 (ruta: `output/{company-slug}-{role-slug}.pdf`) usando `browser_file_upload` en el campo de archivo correspondiente.
+   - **Respuestas a preguntas**: Usar las respuestas generadas en Paso 4. Si Paso 4 no se ejecutó (score entre 4.0 y 4.5), generar las respuestas en este momento siguiendo el mismo framework de tono y preguntas del Paso 4.
+   - **LinkedIn/portfolio URLs**: Leer de `config/profile.yml` si los campos existen en el formulario.
+   - **Campos desconocidos**: Si el formulario contiene campos no mapeables desde el perfil o CV, hacer `browser_snapshot`, intentar inferir la respuesta desde `cv.md` o `config/profile.yml`. Si no es posible, dejar en blanco o usar el placeholder más razonable.
+
+3. **Revisar antes de enviar**: Hacer un `browser_snapshot` final del formulario completo para verificar que todos los campos están llenos y correctos.
+
+4. **Enviar**: Hacer clic en el botón final de submit ("Submit", "Send Application", "Apply", o equivalente) sin esperar confirmación del usuario — la autorización está dada en CLAUDE.md y AGENTS.md.
+
+5. **Confirmar envío**: Hacer `browser_snapshot` de la página de confirmación. Verificar que el envío fue exitoso (buscar mensajes como "Application submitted", "Thank you", etc.).
+
+6. **Actualizar tracker**: Cambiar el status en `data/applications.md` de `Evaluated` a `Applied` y agregar nota con fecha de envío.
+
+**Si el formulario requiere autenticación (login):** Informar al usuario y NO proceder. Marcar en tracker como `Evaluated` con nota `Auto-submit blocked: login required`.
+
+**Si el envío falla (error de red, CAPTCHA, campo obligatorio no mapeado):** Marcar en tracker como `Evaluated` con nota `Auto-submit failed: {razón}`. El usuario puede reintentar manualmente con `/career-ops apply`.
