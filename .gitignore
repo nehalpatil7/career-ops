@@ -36,3 +36,9 @@ node_modules/
 .claude/memory/
 career-dashboard
 package-lock.json
+
+# career-ops
+.playwright-mcp
+batch/tracker-additions/merged
+templates/typst/resume-*
+temp*.pdf

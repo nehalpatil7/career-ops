@@ -38,7 +38,7 @@
   }
 
 
-  let formattedName = block(upper(text(2.5em, weight: "bold", theme, name)))
+  let formattedName = block(upper(text(2em, weight: "bold", theme, name)))
 
   let contactLine = contact.map(c => {
     if c.link == none [

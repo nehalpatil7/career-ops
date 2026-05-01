@@ -175,6 +175,16 @@ go build -o career-dashboard .
 ./career-dashboard --path ..
 ```
 
+## Custom Replies
+```markdown
+- the links are available in data folder, start applying to those jobs;
+- generate a new resume for each application tailored according to the job description;
+- use playwright to navigate to the application page, read the form, generate answers, fill fields, and submit automatically;
+- Start with the top ~10 best-fit roles;
+- only apply for roles based in the United States or remote;
+- avoid applying to Staff/Lead/Principal/Head roles;
+```
+
 Features: 6 filter tabs, 4 sort modes, grouped/flat view, lazy-loaded previews, inline status changes.
 
 ## Project Structure
