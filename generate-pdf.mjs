@@ -56,12 +56,14 @@ function generatePDF() {
   console.log(`📁 Output: ${outputPath}`);
   console.log(`📏 Format: ${format.toUpperCase()}`);
 
-  // Resolve the font directory (assets/fonts relative to the input .typ file)
-  const fontDir = resolve(dirname(inputPath), 'assets', 'fonts');
+  // Resolve the font directory (relative to project root templates/typst/assets/fonts)
+  const projectRoot = __dirname;
+  const fontDir = resolve(projectRoot, 'templates', 'typst', 'assets', 'fonts');
 
   // Build the typst compile command
   const cmd = [
     'typst', 'compile',
+    `--root`, projectRoot,
     `--font-path`, fontDir,
     `--input`, `page-size=${typstPageSize}`,
     inputPath,
@@ -69,7 +71,7 @@ function generatePDF() {
   ].map(s => `"${s}"`).join(' ');
 
   try {
-    execSync(cmd, { stdio: 'inherit', cwd: dirname(inputPath) });
+    execSync(cmd, { stdio: 'inherit', cwd: projectRoot });
   } catch (err) {
     console.error('❌ PDF generation failed. Is typst CLI installed?');
     console.error('   Install: https://github.com/typst/typst#installation');
